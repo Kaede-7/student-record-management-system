@@ -1,6 +1,7 @@
 <?php
     session_start();
     include "../config/db.php";
+    include "../includes/header.php";
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt = $conn->prepare("SELECT id, password, role FROM users WHERE username = ?");
@@ -25,7 +26,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Record Management System | Login Page</title>
-    <!-- <link rel="stylesheet" href="../assets/css/style.css"> -->
+    <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
     <form method="POST">
@@ -36,3 +37,7 @@
 </form>
 </body>
 </html>
+
+<?php
+    include "../includes/footer.php";
+?>
