@@ -12,7 +12,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header("Location: dashboard.php");
 }
 ?>
-<form method="POST">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Page</title>
+    <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body>
+    <form method="POST">
     <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
     <input type="text" name="username" placeholder="Username" required><br>
     <input type="password" name="password" placeholder="Password" required><br>
@@ -20,3 +29,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <input type="text" name="course" placeholder="Course"><br>
     <button type="submit">Add Student</button>
 </form>
+</body>
+</html>
