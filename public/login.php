@@ -1,4 +1,5 @@
 <?php
+    session_start();
     include "../config/db.php";
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -6,6 +7,7 @@
     $stmt->bind_param("s", $_POST['username']);
     $stmt->execute();
     $res = $stmt->get_result()->fetch_assoc();
+    var_dump($res);
 
     if ($res && password_verify($_POST['password'], $res['password'])) {
         $_SESSION['user_id'] = $res['id'];
