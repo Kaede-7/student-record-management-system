@@ -3,14 +3,22 @@
     include "../config/db.php";
     include "../includes/header.php";
 
+    if (isset($_SESSION['user_id']) && $_SESSION['role'] == 'admin') {
+    header("Location: admin/dashboard.php");
+    exit();
+    }
+    if (isset($_SESSION['user_id']) && $_SESSION['role'] !== 'admin') {
+    header("Location: users/profile.php");
+    exit();
+    }
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt = $conn->prepare("SELECT id, password, role FROM users WHERE username = ?");
     $stmt->bind_param("s", $_POST['username']);
     $stmt->execute();
     $res = $stmt->get_result()->fetch_assoc();
-    var_dump($res);
 
     if ($res && password_verify($_POST['password'], $res['password'])) {
+        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
         $_SESSION['user_id'] = $res['id'];
         $_SESSION['role'] = $res['role'];
         header("Location: " . ($res['role'] == 'admin' ? 'admin/dashboard.php' : 'users/profile.php'));

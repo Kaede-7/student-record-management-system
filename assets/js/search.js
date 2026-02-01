@@ -11,7 +11,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const filter = searchInput.value.toLowerCase();
 
       for (let i = 0; i < rows.length; i++) {
-        // Column 0 is Name, Column 1 is Course
         const nameText = rows[i]
           .getElementsByTagName("td")[0]
           .textContent.toLowerCase();
@@ -20,9 +19,9 @@ document.addEventListener("DOMContentLoaded", () => {
           .textContent.toLowerCase();
 
         if (nameText.includes(filter) || courseText.includes(filter)) {
-          rows[i].style.display = ""; // Show row
+          rows[i].style.display = "";
         } else {
-          rows[i].style.display = "none"; // Hide row
+          rows[i].style.display = "none"; 
         }
       }
     });

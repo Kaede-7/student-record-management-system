@@ -1,27 +1,38 @@
 <?php 
+session_start();
 require_once '../../config/db.php';
-require_once '../../includes/functions.php';
-protect_page('student');
+
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'student') {
+    header("Location: ../login.php");
+    exit();
+}
 
 $user_id = $_SESSION['user_id'];
-$user = $conn->query("SELECT * FROM users WHERE id = $user_id")->fetch_assoc();
+
+$stmt = $conn->prepare("SELECT * FROM users WHERE id = ?");
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$user = $stmt->get_result()->fetch_assoc();
 
 include '../../includes/header.php'; 
 ?>
 
 <div class="profile-card">
-    <div class="status-badge" style="background:#e2e8f0; padding:10px; border-radius:5px; margin-bottom:15px;">
+    <div class="status-badge">
         <i class="fas fa-user-check"></i> 
         Logged in as: <strong>Student</strong>
     </div>
 
     <h1>Student Profile</h1>
-    <p><strong>Name:</strong> <?= e($user['full_name']) ?></p>
-    <p><strong>Course:</strong> <?= e($user['course']) ?></p>
-    <p><strong>Attendance:</strong> <?= $user['present_days'] ?> Days</p>
+    
+    <p><strong>Name:</strong> <?php echo htmlspecialchars($user['full_name'], ENT_QUOTES, 'UTF-8'); ?></p>
+    <p><strong>Course:</strong> <?php echo htmlspecialchars($user['course'], ENT_QUOTES, 'UTF-8'); ?></p>
+    <p><strong>Attendance:</strong> <?php echo (int)$user['present_days']; ?> Days</p>
 
-    <div style="margin-top:20px;">
-        <a href="../logout.php" class="btn btn-danger"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    <div class="profile-actions">
+        <a href="../logout.php" class="btn btn-danger">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </a>
     </div>
 </div>
 
