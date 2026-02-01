@@ -37,7 +37,7 @@ $s = $stmt->get_result()->fetch_assoc();
         <label>Course:</label>
         <input type="text" name="course" value="<?= e($s['course']) ?>">
         
-        <label>Present Days (Manual Edit):</label>
+        <label>Present Days(Manual Edit):</label>
         <input type="number" name="present_days" value="<?= $s['present_days'] ?>" min="0">
         
         <button type="submit">Update Record</button>
