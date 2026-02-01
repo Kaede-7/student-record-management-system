@@ -12,7 +12,7 @@
     if ($res && password_verify($_POST['password'], $res['password'])) {
         $_SESSION['user_id'] = $res['id'];
         $_SESSION['role'] = $res['role'];
-        header("Location: " . ($res['role'] == 'admin' ? 'admin/dashboard.php' : 'user/profile.php'));
+        header("Location: " . ($res['role'] == 'admin' ? 'admin/dashboard.php' : 'users/profile.php'));
     } else {
         $error = "Invalid credentials";
         echo $error;
@@ -25,6 +25,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Record Management System | Login Page</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
     <form method="POST">
