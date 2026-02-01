@@ -2,7 +2,6 @@
 session_start();
 require_once '../../config/db.php';
 
-// 1. Manual Security Check (Replacing protect_page)
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     header("Location: ../login.php");
     exit();
@@ -11,9 +10,8 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
 $id = intval($_GET['id'] ?? 0);
 $token = $_SESSION['csrf_token'];
 
-// 2. Handle Form Submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Manual CSRF Check
+
     if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $token) {
         die("CSRF validation failed");
     }
@@ -31,13 +29,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// 3. Fetch Student Data
 $stmt = $conn->prepare("SELECT * FROM users WHERE id = ? AND role = 'student'");
 $stmt->bind_param("i", $id);
 $stmt->execute();
 $s = $stmt->get_result()->fetch_assoc();
 
-// If student doesn't exist, go back
 if (!$s) {
     header("Location: dashboard.php");
     exit;
