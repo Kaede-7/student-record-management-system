@@ -17,9 +17,9 @@ CRUD operation:
     Edit Student Info
     Delete Students
 Ajax autocomplete (Real time live search students)
-CSRF Projection
+CSRF Protection
 XSS Protection with htmlspecialchars
 SQL injection Protection using prepared statements
 Password hashing security
 One click attendance marking through admin side
-Attendence veiwing through user side for the logged in user only
+Attendance viewing through user side for the logged in user only
